@@ -1,0 +1,85 @@
+import json
+import hashlib
+import os
+from Verification import verification
+
+USER_FILE = "users.json"
+DOMAINS_FILE = "emails.json"
+
+# Load user info
+def load():
+    if os.path.exists(USER_FILE):
+        try:
+            with open(USER_FILE, "r") as file:
+                data = file.read().strip()
+                return json.loads(data) if data else {}
+        except json.JSONDecodeError:
+            return {}
+    return {}
+
+# Load email domains
+def load_domains():
+    if os.path.exists(DOMAINS_FILE):
+        with open(DOMAINS_FILE, "r") as file:
+            data = json.load(file)
+            return data.get("valid_domains", [])
+    return {}
+
+# Save user info
+def save(users):
+    with open(USER_FILE, "w") as file:
+        json.dump(users, file, indent=4)
+
+# Password encryption
+def hashing(password):
+    return hashlib.sha256(password.encode()).hexdigest()
+
+# User input for account creation
+def creation():
+    users = load()
+    valid_domains = load_domains()
+
+    while True:
+        username = input("Enter a username: ")
+        if username in users:
+            print("Username already taken. Try another one.")
+        else:
+            break
+    
+    while True:
+        email = input("Enter an email: ").strip()
+        
+        domain = email.split('@')[-1].strip()
+
+        if domain not in valid_domains:
+            print("Invalid email domain. Please enter an email with a valid domain.")
+        elif any(info.get("email") == email for info in users.values()):
+            print("Email already taken. Try another one.")
+        else:
+            break
+
+    while True:    
+        password = input("Enter a password: ")
+        confirm_password = input("Confirm password: ")
+        if password != confirm_password:
+            print("Passwords do not match")
+        else:
+            break
+    
+    otp = verification(email)
+    while True:
+        verify = input("Please Enter Verification Code: ")
+        
+        if verify.strip() != otp:
+            print("Incorrect Verification Code. Try Again.")
+            resend = input("Would you like to resend the verification code? (y/n): ").strip().lower()
+            if resend == 'y':
+                otp = verification(email)
+        else:
+            break
+
+    users[username] = {"email": email, "password": hashing(password)}
+    save(users)
+    print("Account created successfully")
+
+creation()
