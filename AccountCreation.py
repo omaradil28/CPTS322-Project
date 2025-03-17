@@ -36,42 +36,50 @@ def hashing(password):
 
 # User input for account creation
 def creation():
+    os.system('clear')
     users = load()
     valid_domains = load_domains()
 
     while True:
         username = input("Enter a username: ")
+        print()
         if username in users:
             print("Username already taken. Try another one.")
+            print()
         else:
             break
-    
+       
+
     while True:
         email = input("Enter an email: ").strip()
-        
+        print()
         domain = email.split('@')[-1].strip()
 
         if domain not in valid_domains:
             print("Invalid email domain. Please enter an email with a valid domain.")
+            print()
         elif any(info.get("email") == email for info in users.values()):
             print("Email already taken. Try another one.")
+            print()
         else:
             break
 
     while True:    
         password = input("Enter a password: ")
         confirm_password = input("Confirm password: ")
+        print()
         if password != confirm_password:
             print("Passwords do not match")
+            print()
         else:
             break
     
     otp = verification(email)
     while True:
         verify = input("Please Enter Verification Code: ")
-        
+        print()
         if verify.strip() != otp:
-            print("Incorrect Verification Code. Try Again.")
+            print("Incorrect Verification Code.")
             resend = input("Would you like to resend the verification code? (y/n): ").strip().lower()
             if resend == 'y':
                 otp = verification(email)
@@ -80,6 +88,7 @@ def creation():
 
     users[username] = {"email": email, "password": hashing(password)}
     save(users)
+    print()
     print("Account created successfully")
 
 creation()

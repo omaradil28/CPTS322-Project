@@ -22,6 +22,7 @@ def verification(to):
     server.send_message(msg)
 
     print("Email Sent")
+    print()
 
     server.quit()
 
