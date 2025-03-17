@@ -37,8 +37,20 @@ def hashing(password):
 # User input for account creation
 def creation():
     os.system('clear')
+    print("Account Registration\n")
     users = load()
     valid_domains = load_domains()
+
+    while True:
+        print("Please choose one of the following options: \n1. Instructor\n2. Student\n")
+        profession = input("Selection: ")
+        print()
+        if profession =='1' or profession == '2':
+            break
+        else:
+            print("Invalid selection. Please enter 1 or 2")
+            print()
+
 
     while True:
         username = input("Enter a username: ")
@@ -86,7 +98,12 @@ def creation():
         else:
             break
 
-    users[username] = {"email": email, "password": hashing(password)}
+    users[username] = {
+        "email": email,
+        "password": hashing(password),
+        "profession": "Instructor" if profession == '1' else "Student"
+    }
+
     save(users)
     print()
     print("Account created successfully")
