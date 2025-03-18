@@ -1,22 +1,26 @@
+import "./App.css";  // Import CSS styles
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 function App() {
-  const [data, setData] = useState([]);
+  const [emails, setEmails] = useState([]);
 
   useEffect(() => {
     axios.get("http://127.0.0.1:5000/api/data")
-      .then(response => setData(response.data.data))
-      .catch(error => console.error("Error fetching data:", error));
+      .then(response => setEmails(Array.isArray(response.data) ? response.data : []))  // Ensure it's an array
+      .catch(error => console.error("Error fetching emails:", error));
   }, []);
 
   return (
-    <div>
-      <h1>Class Respond</h1>
-      <h2>Backend Data:</h2>
-      <ul>
-        {data.map((item, index) => <li key={index}>{item}</li>)}
-      </ul>
+    <div className="container">
+      <h1 className="title">Valid Email Domains</h1>
+      {emails.length === 0 ? <p className="loading-text">Loading or no data found...</p> : 
+        <ul className="email-list">
+          {emails.map((email, index) => (
+            <li key={index} className="email-item">{email}</li>
+          ))}
+        </ul>
+      }
     </div>
   );
 }
