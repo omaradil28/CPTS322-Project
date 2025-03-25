@@ -1,0 +1,80 @@
+# Sprint 1 Report
+Video Link: https://www.youtube.com/watch?v=X7aiNTeG2V4
+## What's New (User Facing)
+ * Quiz Question Creation
+ * Initialize project structure with Flask backend and React frontend
+ * Account creation
+ * Core of Website
+
+
+## Work Summary (Developer Facing)
+
+
+For Quiz Questions, the work was challenging at first as the groundwork was laid out in c++ but then had to be translated into python but after that hurdle it was successfully developed and added to the project. For account creation, the feature was developed through increments of work, with each stage focusing on certain necessities. At the same time, we ensured the feature met user needs by reviewing user stories and acceptance criteria to confirm they exist within our work. For initializing the project structure and setting up the React and Flask framework the main decision was selecting the best frameworks and getting a simple and easy to build off of start. I created an app.py file that handles the backend and then App.js and App.css for the frontend. For the website I did a standard html student dashboard and teacher dashboard and just hardcoded for the classes and grades for now to show it works. It took me some time to style it the way it would be easiest to read.
+
+
+
+
+
+
+## Completed Issues/User Stories
+Here are links to the issues that we completed in this sprint:
+
+
+ * URL of issue 1 https://github.com/omaradil28/CPTS322-Project/issues/2
+ * URL of issue 2 https://github.com/omaradil28/CPTS322-Project/issues/15
+ * URL of issue 3 https://github.com/omaradil28/CPTS322-Project/issues/8
+ * URL of issue 4 https://github.com/omaradil28/CPTS322-Project/issues/14
+ 
+ ## Code Files for Review
+Please review the following code files, which were actively developed during this sprint, for quality:
+Allard
+ * [QuizData.py] (https://github.com/omaradil28/CPTS322-Project/blob/main/QuizData.py)
+ * [TestQuizDataObject.py] (https://github.com/omaradil28/CPTS322-Project/blob/main/TestQuizDataObject.py)
+
+
+Adil
+ * [AccountCreation.py]
+(https://github.com/omaradil28/CPTS322-Project/blob/Adil-Sprint-1/AccountCreation.py)
+
+
+
+
+ * [Verification.py]
+(https://github.com/omaradil28/CPTS322-Project/blob/Adil-Sprint-1/Verification.py)
+ * [emails.py]
+(https://github.com/omaradil28/CPTS322-Project/blob/Adil-Sprint-1/emails.json)
+ * [users.py]
+(https://github.com/omaradil28/CPTS322-Project/blob/Adil-Sprint-1/users.json)
+
+
+Noah
+ * [student.html]
+(https://github.com/omaradil28/CPTS322-Project/blob/Noah-Sprint-1/student.html)
+ * [teacher.html]
+(https://github.com/omaradil28/CPTS322-Project/blob/Noah-Sprint-1/teacher.html)
+
+
+Daniel
+ * [app.py]
+(https://github.com/omaradil28/CPTS322-Project/blob/main/backend/app.py)
+ * [App.js]
+(https://github.com/omaradil28/CPTS322-Project/blob/main/frontend/src/App.js)
+ * [App.css]
+(https://github.com/omaradil28/CPTS322-Project/blob/main/frontend/src/App.css)
+
+
+  
+## Retrospective Summary
+Here's what went well:
+  * We each completed our assigned issues 
+  * We were able to get an early stage functioning product
+  *  
+Here's what we'd like to improve:
+   * We would like to finish our issues more efficiently
+   * We want to improve our communication and teamwork
+   * We want to continue to develop our project management skills
+ 
+Here are changes we plan to implement in the next sprint:
+   * Work more proactively 
+   * Document as we go along and not just at the end
