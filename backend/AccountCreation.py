@@ -1,7 +1,7 @@
 import json
 import hashlib
 import os
-from Verification import verification
+from backend.Verification import verification
 
 USER_FILE = "users.json"
 DOMAINS_FILE = "emails.json"
