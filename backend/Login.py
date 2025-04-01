@@ -43,7 +43,7 @@ def login():
             print()
 
     print()
-    print(f"Login successful! Welcome back, {username}.")
+    print(f"Login successful! Welcome back, {username}")
 
     profession = users[username]["profession"]
     print(f"You are logged in as a {profession}.")
