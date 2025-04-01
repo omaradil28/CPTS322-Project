@@ -2,8 +2,10 @@ import hashlib
 import json
 import os
 
-USER_FILE = "users.json"
+USER_FILE = os.path.join(os.path.dirname(__file__), "data", "users.json")
+DOMAINS_FILE = os.path.join(os.path.dirname(__file__), "data", "emails.json")
 
+# Loads user info
 def load():
     if os.path.exists(USER_FILE):
         try:
@@ -14,9 +16,11 @@ def load():
             return {}
     return {}
 
+# Decrypts passowrd
 def hashing(password):
     return hashlib.sha256(password.encode()).hexdigest()
 
+# Username and Password input for login
 def login():
     os.system('clear')
     print("Login\n")
