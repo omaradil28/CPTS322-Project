@@ -1,26 +1,49 @@
-import "./App.css";  // Import CSS styles
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import "./App.css";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import TeacherDashboard from "./TeacherPage";
+import StudentPage from "./StudentPage"; // Correct path
+import LoginPage from "./LoginPage";     // Correct path
 
 function App() {
-  const [emails, setEmails] = useState([]);
-
-  useEffect(() => {
-    axios.get("http://127.0.0.1:5000/api/data")
-      .then(response => setEmails(Array.isArray(response.data) ? response.data : []))  // Ensure it's an array
-      .catch(error => console.error("Error fetching emails:", error));
-  }, []);
-
   return (
-    <div className="container">
-      <h1 className="title">Valid Email Domains</h1>
-      {emails.length === 0 ? <p className="loading-text">Loading or no data found...</p> : 
-        <ul className="email-list">
-          {emails.map((email, index) => (
-            <li key={index} className="email-item">{email}</li>
-          ))}
-        </ul>
-      }
+    <Router>
+      <div className="App">
+        {/* Navigation Links */}
+        <nav>
+          <Link to="/">Home</Link> | <Link to="/teacher">Teacher Page</Link> |{" "}
+          <Link to="/student">Student Page</Link> | <Link to="/login">Login</Link>
+        </nav>
+
+        {/* Define Routes */}
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/teacher" element={<TeacherDashboard />} />
+          <Route path="/student" element={<StudentPage />} />
+          <Route path="/login" element={<LoginPage />} />
+        </Routes>
+      </div>
+    </Router>
+  );
+}
+
+// Home Page Component
+function HomePage() {
+  return (
+    <div>
+      <h1>Welcome to the App</h1>
+      <p>Select a page to navigate:</p>
+      <div>
+        <Link to="/teacher">
+          <button>Go to Teacher Page</button>
+        </Link>
+        <Link to="/student">
+          <button>Go to Student Page</button>
+        </Link>
+        <Link to="/login">
+          <button>Go to Login Page</button>
+        </Link>
+      </div>
     </div>
   );
 }
