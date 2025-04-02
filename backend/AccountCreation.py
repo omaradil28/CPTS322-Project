@@ -1,10 +1,11 @@
+# Added Omar's code for account creation
 import json
 import hashlib
 import os
-from backend.Verification import verification
+from Verification import verification
 
-USER_FILE = "users.json"
-DOMAINS_FILE = "emails.json"
+USER_FILE = os.path.join(os.path.dirname(__file__), "data", "users.json")
+DOMAINS_FILE = os.path.join(os.path.dirname(__file__), "data", "emails.json")
 
 # Load user info
 def load():

@@ -1,3 +1,4 @@
+# Added Omar's code for verification
 import random
 import smtplib
 from email.message import EmailMessage
