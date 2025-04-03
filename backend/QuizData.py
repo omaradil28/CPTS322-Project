@@ -1,4 +1,10 @@
-import unittest
+from flask import Blueprint, request, jsonify  # Ensure Flask is installed: pip install flask
+# Removed unused imports
+
+QuizData_blueprint = Blueprint('quiz', __name__)
+
+quiz_blueprint = Blueprint('quiz', __name__)  # Corrected variable name
+quizzes = {}
 
 class QuizData:
     def __init__(self, qID, qType, qDataID, ques, answers, correct, points, fb):
@@ -12,26 +18,32 @@ class QuizData:
         self.feedback = fb
         self.yourAnswer = "Blank"
 
-    def display_question(self):
-        print(self.question)
-        if self.quizType in ["Multiple", "Poll"]:
-            for i, answer in enumerate(self.possibleAnswers, start=1):
-                print(f"{i}) {answer}")
+    def to_dict(self):
+        return {
+            "quizID": self.quizID,
+            "quizType": self.quizType,
+            "quizDataID": self.quizDataID,
+            "question": self.question,
+            "possibleAnswers": self.possibleAnswers,
+            "correctAnswer": self.correctAnswer,
+            "pointValue": self.pointValue,
+            "feedback": self.feedback,
+            "yourAnswer": self.yourAnswer,
+        }
 
-    def get_response(self, user_input=None):
+    def get_response(self, user_input):
         if self.quizType in ["Multiple", "Poll"]:
             try:
-                ua = int(user_input) if user_input is not None else int(input("Enter your answer number: "))
+                ua = int(user_input)
                 if 1 <= ua <= len(self.possibleAnswers):
                     self.yourAnswer = self.possibleAnswers[ua - 1]
                 else:
-                    print("You have entered an invalid response. Please try again.")
-                    self.get_response()
+                    return "Invalid response. Out of range."
             except ValueError:
-                print("Invalid input. Please enter a number.")
-                self.get_response()
+                return "Invalid input. Please enter a number."
         elif self.quizType == "Free":
-            self.yourAnswer = user_input.strip() if user_input is not None else input("Enter your answer: ").strip()
+            self.yourAnswer = user_input.strip()
+        return "Response recorded."
 
     def check_answer(self):
         if self.quizType in ["Multiple", "Free"]:
@@ -39,61 +51,43 @@ class QuizData:
         elif self.quizType == "Poll":
             return self.yourAnswer != "Blank"
 
-    # Getters
-    def get_quiz_id(self):
-        return self.quizID
+# Routes
+@quiz_blueprint.route('/quiz', methods=['POST'])
+def create_quiz():
+    data = request.json
+    quiz = QuizData(
+        qID=data['quizID'],
+        qType=data['quizType'],
+        qDataID=data['quizDataID'],
+        ques=data['question'],
+        answers=data['possibleAnswers'],
+        correct=data['correctAnswer'],
+        points=data['pointValue'],
+        fb=data['feedback']
+    )
+    quizzes[data['quizID']] = quiz
+    return jsonify({"message": "Quiz created successfully", "quiz": quiz.to_dict()}), 201
 
-    def get_quiz_type(self):
-        return self.quizType
+@quiz_blueprint.route('/quiz/<quiz_id>', methods=['GET'])
+def get_quiz(quiz_id):
+    quiz = quizzes.get(quiz_id)
+    if not quiz:
+        return jsonify({"error": "Quiz not found"}), 404
+    return jsonify(quiz.to_dict())
 
-    def get_quiz_data_id(self):
-        return self.quizDataID
+@quiz_blueprint.route('/quiz/<quiz_id>/response', methods=['POST'])
+def submit_response(quiz_id):
+    quiz = quizzes.get(quiz_id)
+    if not quiz:
+        return jsonify({"error": "Quiz not found"}), 404
+    user_input = request.json.get('response')
+    message = quiz.get_response(user_input)
+    return jsonify({"message": message, "quiz": quiz.to_dict()})
 
-    def get_question(self):
-        return self.question
-
-    def get_possible_answers(self):
-        return self.possibleAnswers
-
-    def get_correct_answer(self):
-        return self.correctAnswer
-
-    def get_point_value(self):
-        return self.pointValue
-
-    def get_feedback(self):
-        return self.feedback
-
-    def get_your_answer(self):
-        return self.yourAnswer
-
-    # Setters
-    def set_quiz_id(self, qID):
-        self.quizID = qID
-
-    def set_quiz_type(self, qType):
-        self.quizType = qType
-
-    def set_quiz_data_id(self, qDataID):
-        self.quizDataID = qDataID
-
-    def set_question(self, ques):
-        self.question = ques
-
-    def set_possible_answers(self, answers):
-        self.possibleAnswers = answers
-
-    def set_correct_answer(self, correct):
-        self.correctAnswer = correct
-
-    def set_point_value(self, points):
-        self.pointValue = points
-
-    def set_feedback(self, fb):
-        self.feedback = fb
-
-    def set_your_answer(self, answer):
-        self.yourAnswer = answer
-
-
-
+@quiz_blueprint.route('/quiz/<quiz_id>/check', methods=['GET'])
+def check_answer(quiz_id):
+    quiz = quizzes.get(quiz_id)
+    if not quiz:
+        return jsonify({"error": "Quiz not found"}), 404
+    is_correct = quiz.check_answer()
+    return jsonify({"correct": is_correct, "feedback": quiz.feedback})
