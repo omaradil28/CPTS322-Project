@@ -1,9 +1,10 @@
 // Attempting to shift teacher.html to a React component
 import React from "react";
+import BasePage from "./BasePage";
 
 function TeacherDashboard() {
   return (
-    <div>
+    <BasePage>
       <h1>Teacher Dashboard</h1>
 
       <h2>Classes You Teach</h2>
@@ -111,7 +112,7 @@ function TeacherDashboard() {
           <strong>Average Score:</strong> 87.5%
         </p>
       </div>
-    </div>
+    </BasePage>
   );
 }
 

@@ -1,14 +1,14 @@
-# Added Omar's code for account creation
+from flask import Blueprint, request, jsonify
 import json
 import hashlib
 import os
-from Verification import verification
+
+account_creation = Blueprint("account_creation", __name__)
 
 USER_FILE = os.path.join(os.path.dirname(__file__), "data", "users.json")
-DOMAINS_FILE = os.path.join(os.path.dirname(__file__), "data", "emails.json")
 
 # Load user info
-def load():
+def load_users():
     if os.path.exists(USER_FILE):
         try:
             with open(USER_FILE, "r") as file:
@@ -18,95 +18,130 @@ def load():
             return {}
     return {}
 
-# Load email domains
-def load_domains():
-    if os.path.exists(DOMAINS_FILE):
-        with open(DOMAINS_FILE, "r") as file:
-            data = json.load(file)
-            return data.get("valid_domains", [])
-    return {}
-
 # Save user info
-def save(users):
+def save_users(users):
     with open(USER_FILE, "w") as file:
         json.dump(users, file, indent=4)
 
-# Password encryption
+# Password hashing
 def hashing(password):
     return hashlib.sha256(password.encode()).hexdigest()
 
-# User input for account creation
-def creation():
-    os.system('clear')
-    print("Account Registration\n")
-    users = load()
-    valid_domains = load_domains()
+@account_creation.route('/api/create-account', methods=['POST'])
+def create_account():
+    print("Account creation endpoint hit")  # Debugging: Log the endpoint hit
+    try:
+        data = request.json
+        print(f"Received data: {data}")  # Debugging: Log received data
 
-    while True:
-        print("Please choose one of the following options: \n1. Instructor\n2. Student\n")
-        profession = input("Selection: ")
-        print()
-        if profession =='1' or profession == '2':
-            break
-        else:
-            print("Invalid selection. Please enter 1 or 2")
-            print()
+        users = load_users()
+        username = data.get("username")
+        email = data.get("email")
+        password = data.get("password")
+        confirm_password = data.get("confirm_password")
+        profession = data.get("profession")
 
-
-    while True:
-        username = input("Enter a username: ")
-        print()
+        # Validate username
         if username in users:
-            print("Username already taken. Try another one.")
-            print()
-        else:
-            break
-       
+            return jsonify({"error": "Username already taken."}), 400
 
-    while True:
-        email = input("Enter an email: ").strip()
-        print()
-        domain = email.split('@')[-1].strip()
-
-        if domain not in valid_domains:
-            print("Invalid email domain. Please enter an email with a valid domain.")
-            print()
-        elif any(info.get("email") == email for info in users.values()):
-            print("Email already taken. Try another one.")
-            print()
-        else:
-            break
-
-    while True:    
-        password = input("Enter a password: ")
-        confirm_password = input("Confirm password: ")
-        print()
+        # Validate password
         if password != confirm_password:
-            print("Passwords do not match")
-            print()
-        else:
-            break
+            return jsonify({"error": "Passwords do not match."}), 400
+
+        # Save user
+        users[username] = {
+            "email": email,
+            "password": hashing(password),
+            "profession": profession
+        }
+        save_users(users)
+        print("Saved user data")  # Debugging: Log save action
+
+        print(f"User {username} created successfully.")  # Debugging: Log success
+        return jsonify({"message": "Account created successfully!"}), 201
+
+    except Exception as e:
+        print(f"Error: {e}")  # Debugging: Log the error
+        return jsonify({"error": "An internal error occurred."}), 500
     
-    otp = verification(email)
-    while True:
-        verify = input("Please Enter Verification Code: ")
-        print()
-        if verify.strip() != otp:
-            print("Incorrect Verification Code.")
-            resend = input("Would you like to resend the verification code? (y/n): ").strip().lower()
-            if resend == 'y':
-                otp = verification(email)
-        else:
-            break
+# from flask import Flask, request, jsonify
+# import json
+# import hashlib
+# import os
+# from Verification import verification
+# from flask_cors import CORS
 
-    users[username] = {
-        "email": email,
-        "password": hashing(password),
-        "profession": "Instructor" if profession == '1' else "Student"
-    }
+# app = Flask(__name__)
+# CORS(app)  # Enable CORS for all routes
 
-    save(users)
-    print()
-    print("Account created successfully")
+# USER_FILE = os.path.join(os.path.dirname(__file__), "data", "users.json")
+# DOMAINS_FILE = os.path.join(os.path.dirname(__file__), "data", "emails.json")
 
-creation()
+# # Load user info
+# def load():
+#     if os.path.exists(USER_FILE):
+#         try:
+#             with open(USER_FILE, "r") as file:
+#                 data = file.read().strip()
+#                 return json.loads(data) if data else {}
+#         except json.JSONDecodeError:
+#             return {}
+#     return {}
+
+# # Load email domains
+# def load_domains():
+#     if os.path.exists(DOMAINS_FILE):
+#         with open(DOMAINS_FILE, "r") as file:
+#             data = json.load(file)
+#             return data.get("valid_domains", [])
+#     return {}
+
+# # Save user info
+# def save(users):
+#     with open(USER_FILE, "w") as file:
+#         json.dump(users, file, indent=4)
+
+# # Password encryption
+# def hashing(password):
+#     return hashlib.sha256(password.encode()).hexdigest()
+
+# # API endpoint for account creation
+# @app.route('/api/create-account', methods=['POST'])
+# def create_account():
+#     try:
+#         data = request.json
+#         print(f"Received data: {data}")  # Debugging: Log received data
+
+#         users = load()
+#         username = data.get("username")
+#         email = data.get("email")
+#         password = data.get("password")
+#         confirm_password = data.get("confirm_password")
+#         profession = data.get("profession")
+
+#         # Validate username
+#         if username in users:
+#             return jsonify({"error": "Username already taken."}), 400
+
+#         # Validate password
+#         if password != confirm_password:
+#             return jsonify({"error": "Passwords do not match."}), 400
+
+#         # Save user
+#         users[username] = {
+#             "email": email,
+#             "password": hashing(password),
+#             "profession": profession
+#         }
+#         save(users)
+
+#         print(f"User {username} created successfully.")  # Debugging: Log success
+#         return jsonify({"message": "Account created successfully!"}), 201
+
+#     except Exception as e:
+#         print(f"Error: {e}")  # Debugging: Log the error
+#         return jsonify({"error": "An internal error occurred."}), 500
+
+# if __name__ == '__main__':
+#     app.run(debug=True)
