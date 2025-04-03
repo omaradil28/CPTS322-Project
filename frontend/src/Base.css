@@ -1,0 +1,37 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+  }
+  
+  .header {
+    background-color: #4d7fb2;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .header a {
+    color: white;
+    margin: 0 15px;
+    text-decoration: none;
+  }
+  
+  .header a:hover {
+    text-decoration: underline;
+  }
+  
+  .content {
+    padding: 20px;
+    min-height: 80vh;
+  }
+  
+  .footer {
+    background-color: #4d7fb2;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+  }

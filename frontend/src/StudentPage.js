@@ -1,8 +1,9 @@
 import React from "react";
+import BasePage from "./BasePage";
 
 function StudentPage() {
   return (
-    <div>
+    <BasePage>
       <h1>Student Dashboard</h1>
 
       <h2>Your Enrolled Classes - Person A</h2>
@@ -54,7 +55,7 @@ function StudentPage() {
           <li>Quiz 1: Basics of Programming - Score: 100%</li>
         </ul>
       </div>
-    </div>
+    </BasePage>
   );
 }
 
