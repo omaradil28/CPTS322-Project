@@ -3,5 +3,10 @@
         "email": "daniel@gmail.com",
         "password": "pass",
         "profession": "Student"
+    },
+    "omar": {
+        "email": "omar@gmail.com",
+        "password": "c3a877c253d10e422299be3dc8c4dc16ad221870425e83a1f8c02d37a88c7090",
+        "profession": "Student"
     }
 }
