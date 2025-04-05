@@ -3,6 +3,7 @@ from flask_cors import CORS
 import json
 from AccountCreation import account_creation  # Import the account creation Blueprint
 from Login import login_blueprint  # Import the login Blueprint
+from QuizData import QuizData_blueprint
 
 app = Flask(__name__)
 CORS(app) 
@@ -10,6 +11,7 @@ CORS(app)
 # Register Blueprints
 app.register_blueprint(account_creation)
 app.register_blueprint(login_blueprint)
+app.register_blueprint(QuizData_blueprint)
 
 @app.route('/')
 def home():
