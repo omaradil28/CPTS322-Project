@@ -1,0 +1,55 @@
+# Sprint 2 Report
+Video Link: https://youtu.be/irqorYcwuuo
+## What's New (User Facing)
+ * Quiz Creation
+ * Receive Feedback
+ * Uniform HTML and CSS design 
+ * Easy navigation between different web pages
+ * Adding teacher quiz maker
+
+
+## Work Summary (Developer Facing)
+We created the Quiz file based off of the already existing quizData, the work was just expanding it and adding more features. The difficult part was the connection as it had to directly connect with quizData which could be hard at times, but with more confidence in the project from the first sprint, it got done. On top of that, we created a login page that validates the credentials that are held in a .json file that stores account information when accounts are created. There were no major barriers that were encountered. Created a quiz maker for teachers so that they can make their own quizzes or tests so that students will be able to take them for the future. I changed the quizData.py with flask so that it will work with our frontend and then added our flask to our frontend so that it will work. Some challenges I faced were dealing with working with flasks because it was my first time.
+
+
+## Completed Issues/User Stories
+Here are links to the issues that we completed in this sprint:
+
+
+ * URL of issue 1 https://github.com/omaradil28/CPTS322-Project/issues/18
+ * URL of issue 2 https://github.com/omaradil28/CPTS322-Project/issues/10
+ * URL of issue 3 https://github.com/omaradil28/CPTS322-Project/issues/27
+https://github.com/users/omaradil28/projects/4?pane=issue&itemId=100575201&issue=omaradil28%7CCPTS322-Project%7C7
+ * URL of issue 4 https://github.com/omaradil28/CPTS322-Project/issues/27
+ * URL of issue 5 https://github.com/omaradil28/CPTS322-Project/issues/30
+ * URL of issue 17 https://github.com/omaradil28/CPTS322-Project/issues/27
+
+
+
+
+
+
+## Code Files for Review
+Please review the following code files, which were actively developed during this sprint, for quality:
+ * [Quiz.py] (https://github.com/omaradil28/CPTS322-Project/blob/main/backend/Quiz.py)
+ * [QuizTest.ipynb] (https://github.com/omaradil28/CPTS322-Project/blob/main/backend/QuizTest.ipynb)
+ * [Login.py] 
+https://github.com/omaradil28/CPTS322-Project/blob/main/backend/Login.py
+ *[quizData.py](https://github.com/omaradil28/CPTS322-Project/blob/Noah-Sprint-2/backend/QuizData.py)
+ * [Login.py] https://github.com/omaradil28/CPTS322-Project/blob/Noah-Sprint-2/frontend/src/TeacherPage.js
+ 
+## Retrospective Summary
+Here's what went well:
+  * Converging the python to flask was a challenge but got it done correctly.
+  * Making the frontend workable with different pages they can scroll through.
+  * Building off the existing framework went well because it was well organized.
+ 
+Here's what we'd like to improve:
+   * Keep all of our branches updated and ensure they don’t fall behind.
+   * Work within React and Flask.
+   * Making the website look better with css and better format.
+ 
+Here are changes we plan to implement in the next sprint:
+   * Fully implement the login and account creation 
+   * Now fully work with flask anytime we add python code.
+   * Making the teacher dashboard and quiz creation on the same page for easy access for the teacher
