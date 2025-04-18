@@ -1,12 +1,12 @@
 from flask import Flask, jsonify
 from flask_cors import CORS
 import json
-from AccountCreation import account_creation  # Import the account creation Blueprint
-from Login import login_blueprint  # Import the login Blueprint
+from AccountCreation import account_creation
+from Login import login_blueprint
 from QuizData import QuizData_blueprint
 
 app = Flask(__name__)
-CORS(app) 
+CORS(app)
 
 # Register Blueprints
 app.register_blueprint(account_creation)
@@ -22,7 +22,7 @@ def get_data():
     try:
         with open("data/emails.json", "r") as file:
             data = json.load(file)
-        return jsonify(data["valid_domains"])  # Return only the array (not an object)
+        return jsonify(data["valid_domains"])
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

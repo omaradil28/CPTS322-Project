@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import BasePage from "./BasePage";
+import axios from "axios";
 
 function TeacherDashboard() {
-  const [quizzes, setQuizzes] = useState(() => {
-    const saved = localStorage.getItem("quizzes");
-    return saved ? JSON.parse(saved) : [];
-  });
+  const [quizzes, setQuizzes] = useState([]);
   const [quizName, setQuizName] = useState("");
   const [quizDescription, setQuizDescription] = useState("");
   const [questions, setQuestions] = useState([
@@ -13,13 +11,10 @@ function TeacherDashboard() {
   ]);
 
   useEffect(() => {
-    const saved = localStorage.getItem("quizzes");
-    if (saved) setQuizzes(JSON.parse(saved));
+    axios.get("http://localhost:5001/quizzes")
+      .then(res => setQuizzes(res.data))
+      .catch(err => console.error("Error loading quizzes:", err));
   }, []);
-  
-  useEffect(() => {
-    localStorage.setItem("quizzes", JSON.stringify(quizzes));
-  }, [quizzes]);
 
   const handleAddQuestion = () =>
     setQuestions([...questions, { text: "", possibleAnswers: ["", "", "", ""], correctAnswer: "" }]);
@@ -37,15 +32,22 @@ function TeacherDashboard() {
   };
 
   const handleCreateQuiz = () => {
+    const quizID = `quiz-${Date.now()}`;
     const newQuiz = {
+      quizID,
       name: quizName.trim(),
       description: quizDescription.trim(),
       questions: questions.filter((q) => q.text.trim()),
     };
-    setQuizzes([...quizzes, newQuiz]);
-    setQuizName("");
-    setQuizDescription("");
-    setQuestions([{ text: "", possibleAnswers: ["", "", "", ""], correctAnswer: "" }]);
+
+    axios.post("http://localhost:5001/quiz", newQuiz)
+      .then(res => {
+        setQuizzes([...quizzes, res.data.quiz]);
+        setQuizName("");
+        setQuizDescription("");
+        setQuestions([{ text: "", possibleAnswers: ["", "", "", ""], correctAnswer: "" }]);
+      })
+      .catch(err => console.error("Error saving quiz:", err));
   };
 
   return (
