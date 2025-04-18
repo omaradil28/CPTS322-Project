@@ -50,6 +50,14 @@ function TeacherDashboard() {
       .catch(err => console.error("Error saving quiz:", err));
   };
 
+  const handleDeleteQuiz = (quizID) => {
+    axios.delete(`http://localhost:5001/quiz/${quizID}`)
+      .then(() => {
+        setQuizzes(quizzes.filter(quiz => quiz.quizID !== quizID));
+      })
+      .catch(err => console.error("Error deleting quiz:", err));
+  };
+
   return (
     <BasePage>
       <h1>Teacher Dashboard</h1>
@@ -118,7 +126,9 @@ function TeacherDashboard() {
       <h2>Quizzes</h2>
       {quizzes.map((quiz, qi) => (
         <details key={qi} style={{ marginBottom: "1em" }}>
-          <summary><strong>{quiz.name}</strong> - {quiz.description}</summary>
+          <summary>
+            <strong>{quiz.name}</strong> - {quiz.description}
+          </summary>
           {quiz.questions.map((q, i) => (
             <div key={i} style={{ marginLeft: "1em" }}>
               <p><strong>Q{i + 1}:</strong> {q.text}</p>
@@ -130,6 +140,7 @@ function TeacherDashboard() {
               <p><em>Correct Answer:</em> {q.correctAnswer}</p>
             </div>
           ))}
+          <button onClick={() => handleDeleteQuiz(quiz.quizID)}>Delete Quiz</button>
         </details>
       ))}
     </BasePage>
