@@ -26,15 +26,9 @@ function App() {
 function HomePage() {
   return (
     <BasePage>
-      <h1>Welcome to the App</h1>
+      <h1>Welcome to ClassRespond</h1>
       <p>Select a page to navigate:</p>
       <div>
-        <Link to="/teacher">
-          <button>Go to Teacher Page</button>
-        </Link>
-        <Link to="/student">
-          <button>Go to Student Page</button>
-        </Link>
         <Link to="/login">
           <button>Go to Login Page</button>
         </Link>

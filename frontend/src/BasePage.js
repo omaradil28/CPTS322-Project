@@ -7,8 +7,6 @@ function BasePage({ children }) {
       <header className="header">
         <nav>
           <a href="/">Home</a>
-          <a href="/teacher">Teacher Page</a>
-          <a href="/student">Student Page</a>
           <a href="/login">Login</a>
           <a href="/create-account">Create Account</a>
         </nav>

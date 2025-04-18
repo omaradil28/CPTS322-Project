@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom"; // ✅ import useNavigate
 import BasePage from "./BasePage";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState(""); // State to store error or success messages
+  const navigate = useNavigate(); // ✅ useNavigate hook for navigation
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,14 +21,20 @@ function LoginPage() {
       const data = await response.json();
 
       if (response.ok) {
-        // Login successful
         setMessage(data.message); // Display success message
+
+        // Redirect based on user role (Student or Teacher)
+        if (data.profession === "Student") {
+          navigate("/student"); // Redirect to StudentPage if the user is a student
+        } else if (data.profession === "Instructor") {
+          navigate("/teacher"); // Redirect to TeacherPage if the user is a teacher
+        } else {
+          setMessage("Unknown profession.");
+        }
       } else {
-        // Login failed
         setMessage(data.error); // Display error message from backend
       }
     } catch (error) {
-      // Handle network or other errors
       setMessage("An error occurred while connecting to the server.");
       console.error("Error:", error);
     }

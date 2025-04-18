@@ -1,12 +1,12 @@
 {
-    "daniel": {
-        "email": "daniel@gmail.com",
-        "password": "pass",
+    "student": {
+        "email": "student@gmail.com",
+        "password": "8de0b3c47f112c59745f717a626932264c422a7563954872e237b223af4ad643",
         "profession": "Student"
     },
-    "omar": {
-        "email": "omar@gmail.com",
-        "password": "c3a877c253d10e422299be3dc8c4dc16ad221870425e83a1f8c02d37a88c7090",
-        "profession": "Student"
+    "teacher": {
+        "email": "teacher@gmail.com",
+        "password": "e3b98a4da31a127d4bde6e43033f66ba274cab0eb7eb1c70ec41402bf6273dd8",
+        "profession": "Instructor"
     }
 }
