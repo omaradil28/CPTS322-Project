@@ -7,7 +7,6 @@ account_creation = Blueprint("account_creation", __name__)
 
 USER_FILE = os.path.join(os.path.dirname(__file__), "data", "users.json")
 
-# Load user info
 def load_users():
     if os.path.exists(USER_FILE):
         try:
@@ -18,21 +17,21 @@ def load_users():
             return {}
     return {}
 
-# Save user info
+
 def save_users(users):
     with open(USER_FILE, "w") as file:
         json.dump(users, file, indent=4)
 
-# Password hashing
+
 def hashing(password):
     return hashlib.sha256(password.encode()).hexdigest()
 
 @account_creation.route('/api/create-account', methods=['POST'])
 def create_account():
-    print("Account creation endpoint hit")  # Debugging: Log the endpoint hit
+    print("Account creation endpoint hit") 
     try:
         data = request.json
-        print(f"Received data: {data}")  # Debugging: Log received data
+        print(f"Received data: {data}") 
 
         users = load_users()
         username = data.get("username")
@@ -41,28 +40,25 @@ def create_account():
         confirm_password = data.get("confirm_password")
         profession = data.get("profession")
 
-        # Validate username
         if username in users:
             return jsonify({"error": "Username already taken."}), 400
 
-        # Validate password
         if password != confirm_password:
             return jsonify({"error": "Passwords do not match."}), 400
 
-        # Save user
         users[username] = {
             "email": email,
             "password": hashing(password),
             "profession": profession
         }
         save_users(users)
-        print("Saved user data")  # Debugging: Log save action
+        print("Saved user data")
 
-        print(f"User {username} created successfully.")  # Debugging: Log success
+        print(f"User {username} created successfully.") 
         return jsonify({"message": "Account created successfully!"}), 201
 
     except Exception as e:
-        print(f"Error: {e}")  # Debugging: Log the error
+        print(f"Error: {e}")
         return jsonify({"error": "An internal error occurred."}), 500
     
 # from flask import Flask, request, jsonify
