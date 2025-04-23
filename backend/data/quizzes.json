@@ -1,0 +1,19 @@
+[
+    {
+        "quizID": "quiz-1745383606868",
+        "name": "Quiz",
+        "description": "Test",
+        "questions": [
+            {
+                "text": "Question",
+                "possibleAnswers": [
+                    "1",
+                    "2",
+                    "3",
+                    "4"
+                ],
+                "correctAnswer": "1"
+            }
+        ]
+    }
+]

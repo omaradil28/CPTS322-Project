@@ -1,7 +1,7 @@
 {
     "student": {
         "email": "student@gmail.com",
-        "password": "8de0b3c47f112c59745f717a626932264c422a7563954872e237b223af4ad643",
+        "password": "8de0b3c47f112c59745f717a626932264c422a7563954872e237b223af4ad643", 
         "profession": "Student"
     },
     "teacher": {
