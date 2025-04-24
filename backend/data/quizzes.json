@@ -36,5 +36,24 @@
                 "correctAnswer": "8"
             }
         ]
+    },
+    {
+        "quizID": "quiz-1745492423457",
+        "name": "Teacher2",
+        "description": "Test1",
+        "creator": "teacher2",
+        "className": "CPTS 323",
+        "questions": [
+            {
+                "text": "Question",
+                "possibleAnswers": [
+                    "9",
+                    "10",
+                    "11",
+                    "12"
+                ],
+                "correctAnswer": "12"
+            }
+        ]
     }
 ]
