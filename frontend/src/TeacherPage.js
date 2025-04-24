@@ -12,17 +12,22 @@ function TeacherDashboard() {
     { text: "", possibleAnswers: ["", "", "", ""], correctAnswer: "" },
   ]);
 
-  const username = location.state?.username; 
+  const [className, setClassName] = useState("");
+  const [classes, setClasses] = useState([]);
+  const [selectedClass, setSelectedClass] = useState("");
+
+  const username = location.state?.username;
 
   useEffect(() => {
     axios.get("http://localhost:5001/quizzes")
       .then(res => {
-        // Filter quizzes to only show those created by the logged-in teacher
         const filteredQuizzes = res.data.filter(quiz => quiz.creator === username);
         setQuizzes(filteredQuizzes);
+        const uniqueClasses = [...new Set(filteredQuizzes.map(q => q.className))];
+        setClasses(uniqueClasses);
       })
       .catch(err => console.error("Error loading quizzes:", err));
-  }, [username]); // Dependency on username to refetch if username changes
+  }, [username]);
 
   const handleAddQuestion = () =>
     setQuestions([...questions, { text: "", possibleAnswers: ["", "", "", ""], correctAnswer: "" }]);
@@ -40,12 +45,18 @@ function TeacherDashboard() {
   };
 
   const handleCreateQuiz = () => {
+    if (!selectedClass) {
+      alert("Please select or create a class first.");
+      return;
+    }
+
     const quizID = `quiz-${Date.now()}`;
     const newQuiz = {
       quizID,
       name: quizName.trim(),
       description: quizDescription.trim(),
       creator: username,
+      className: selectedClass,
       questions: questions.filter((q) => q.text.trim()),
     };
 
@@ -55,6 +66,9 @@ function TeacherDashboard() {
         setQuizName("");
         setQuizDescription("");
         setQuestions([{ text: "", possibleAnswers: ["", "", "", ""], correctAnswer: "" }]);
+        if (!classes.includes(selectedClass)) {
+          setClasses([...classes, selectedClass]);
+        }
       })
       .catch(err => console.error("Error saving quiz:", err));
   };
@@ -67,12 +81,43 @@ function TeacherDashboard() {
       .catch(err => console.error("Error deleting quiz:", err));
   };
 
+  const handleAddClass = () => {
+    if (className.trim() && !classes.includes(className.trim())) {
+      setClasses([...classes, className.trim()]);
+      setSelectedClass(className.trim());
+      setClassName("");
+    }
+  };
+
   return (
     <BasePage>
       <h1>Teacher Dashboard</h1>
-      {username && <p>Welcome, {username}!</p>} 
+      {username && <p>Welcome, {username}!</p>}
+
+      <div style={{ marginBottom: "1em" }}>
+        <h2>Classes</h2>
+        <select
+          value={selectedClass}
+          onChange={(e) => setSelectedClass(e.target.value)}
+        >
+          <option value="">-- Select a Class --</option>
+          {classes.map((cls, i) => (
+            <option key={i} value={cls}>{cls}</option>
+          ))}
+        </select>
+
+        <input
+          type="text"
+          placeholder="New Class Name"
+          value={className}
+          onChange={(e) => setClassName(e.target.value)}
+          style={{ marginLeft: "10px" }}
+        />
+        <button onClick={handleAddClass}>Add Class</button>
+      </div>
+
       <form onSubmit={(e) => { e.preventDefault(); handleCreateQuiz(); }}>
-        <h2>Create a New Quiz</h2>
+        <h2>Create a New Quiz {selectedClass && `for ${selectedClass}`}</h2>
 
         <input
           type="text"
@@ -133,28 +178,40 @@ function TeacherDashboard() {
       <hr />
 
       <h2>Your Quizzes</h2>
-      {quizzes.length > 0 ? (
-        quizzes.map((quiz, qi) => (
-          <details key={qi} style={{ marginBottom: "1em" }}>
-            <summary>
-              <strong>{quiz.name}</strong> - {quiz.description}
-            </summary>
-            {quiz.questions.map((q, i) => (
-              <div key={i} style={{ marginLeft: "1em" }}>
-                <p><strong>Q{i + 1}:</strong> {q.text}</p>
-                <ul>
-                  {q.possibleAnswers.map((a, j) => (
-                    <li key={j}>{a}</li>
-                  ))}
-                </ul>
-                <p><em>Correct Answer:</em> {q.correctAnswer}</p>
-              </div>
-            ))}
-            <button onClick={() => handleDeleteQuiz(quiz.quizID)}>Delete Quiz</button>
-          </details>
-        ))
+      {classes.length > 0 ? (
+        classes.map((cls, i) => {
+          const quizzesForClass = quizzes.filter(q => q.className === cls);
+          return (
+            <div key={i} style={{ marginBottom: "2em" }}>
+              <h3>{cls}</h3>
+              {quizzesForClass.length > 0 ? (
+                quizzesForClass.map((quiz, qi) => (
+                  <details key={qi} style={{ marginBottom: "1em" }}>
+                    <summary>
+                      <strong>{quiz.name}</strong> - {quiz.description}
+                    </summary>
+                    {quiz.questions.map((q, i) => (
+                      <div key={i} style={{ marginLeft: "1em" }}>
+                        <p><strong>Q{i + 1}:</strong> {q.text}</p>
+                        <ul>
+                          {q.possibleAnswers.map((a, j) => (
+                            <li key={j}>{a}</li>
+                          ))}
+                        </ul>
+                        <p><em>Correct Answer:</em> {q.correctAnswer}</p>
+                      </div>
+                    ))}
+                    <button onClick={() => handleDeleteQuiz(quiz.quizID)}>Delete Quiz</button>
+                  </details>
+                ))
+              ) : (
+                <p>No quizzes for this class yet.</p>
+              )}
+            </div>
+          );
+        })
       ) : (
-        <p>No quizzes found for your account.</p>
+        <p>No classes found.</p>
       )}
     </BasePage>
   );
