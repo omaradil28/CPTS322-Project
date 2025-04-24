@@ -12,7 +12,7 @@ function LoginPage() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:5001/api/login", {
+      const response = await fetch("/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
@@ -22,16 +22,19 @@ function LoginPage() {
 
       if (response.ok) {
         setMessage(data.message); 
-
+      
+        sessionStorage.setItem("username", data.username);
+        sessionStorage.setItem("profession", data.profession);
+      
         if (data.profession === "Student") {
           navigate("/student", { state: { username } });
         } else if (data.profession === "Instructor") {
-          navigate("/teacher", { state: { username } }); 
+          navigate("/teacher", { state: { username } });
         } else {
           setMessage("Unknown profession.");
         }
       } else {
-        setMessage(data.error); 
+        setMessage(data.error);
       }
     } catch (error) {
       setMessage("An error occurred while connecting to the server.");

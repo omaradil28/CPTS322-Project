@@ -55,5 +55,130 @@
                 "correctAnswer": "12"
             }
         ]
+    },
+    {
+        "quizID": "quiz-1745523460821",
+        "name": "d",
+        "description": "d",
+        "creator": "teach",
+        "className": "math101",
+        "questions": [
+            {
+                "text": "s",
+                "possibleAnswers": [
+                    "d",
+                    "d",
+                    "d",
+                    "e"
+                ],
+                "correctAnswer": "e"
+            }
+        ]
+    },
+    {
+        "quizID": "quiz-1745524078388",
+        "name": "d",
+        "description": "d",
+        "creator": "teach",
+        "className": "math102",
+        "questions": [
+            {
+                "text": "Its S",
+                "possibleAnswers": [
+                    "d",
+                    "d",
+                    "d",
+                    "s"
+                ],
+                "correctAnswer": "s"
+            },
+            {
+                "text": "Its E",
+                "possibleAnswers": [
+                    "a",
+                    "a",
+                    "e",
+                    "a"
+                ],
+                "correctAnswer": "e"
+            }
+        ]
+    },
+    {
+        "quizID": "quiz-1745525003838",
+        "name": "Egypt",
+        "description": "D",
+        "creator": "teach",
+        "className": "History 105",
+        "questions": [
+            {
+                "text": "King",
+                "possibleAnswers": [
+                    "d",
+                    "d",
+                    "d",
+                    "Royale"
+                ],
+                "correctAnswer": "Royale"
+            }
+        ]
+    },
+    {
+        "quizID": "quiz-1745525151901",
+        "name": "f",
+        "description": "f",
+        "creator": "teach",
+        "className": "math101",
+        "questions": [
+            {
+                "text": "f",
+                "possibleAnswers": [
+                    "fd",
+                    "d",
+                    "f",
+                    "d"
+                ],
+                "correctAnswer": "f"
+            }
+        ]
+    },
+    {
+        "quizID": "quiz-1745525270583",
+        "name": "Test",
+        "description": "This is a test",
+        "creator": "teach",
+        "className": "Test",
+        "questions": [
+            {
+                "text": "3 + 3 = ?",
+                "possibleAnswers": [
+                    "1",
+                    "6",
+                    "2",
+                    "3"
+                ],
+                "correctAnswer": "6"
+            },
+            {
+                "text": "3 + 4 = ?",
+                "possibleAnswers": [
+                    "4",
+                    "5",
+                    "7",
+                    "8"
+                ],
+                "correctAnswer": "7"
+            },
+            {
+                "text": "3 + 6 = ?",
+                "possibleAnswers": [
+                    "9",
+                    "10",
+                    "11",
+                    "12"
+                ],
+                "correctAnswer": "9"
+            }
+        ]
     }
 ]

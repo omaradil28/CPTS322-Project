@@ -13,5 +13,15 @@
         "email": "teacher2@gmail.com",
         "password": "c44474038d459e40e4714afefa7bf8dae9f9834b22f5e8ec1dd434ecb62b512e",
         "profession": "Instructor"
+    },
+    "teach": {
+        "email": "teach@gmail.com",
+        "password": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8",
+        "profession": "Instructor"
+    },
+    "stu": {
+        "email": "stu@gmail.com",
+        "password": "d74ff0ee8da3b9806b18c877dbf29bbde50b5bd8e4dad7a3a725000feb82e8f1",
+        "profession": "Student"
     }
 }

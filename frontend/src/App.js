@@ -5,6 +5,7 @@ import TeacherDashboard from "./TeacherPage";
 import StudentPage from "./StudentPage";
 import LoginPage from "./LoginPage";
 import CreateAccountPage from "./AccountCreationPage";
+import TakeQuiz from "./TakeQuiz";
 import BasePage from "./BasePage"; // Import BasePage
 
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Route path="/student" element={<StudentPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/create-account" element={<CreateAccountPage />} />
+          <Route path="/take-quiz/:quizID" element={<TakeQuiz />} />
         </Routes>
       </div>
     </Router>
