@@ -1,12 +1,17 @@
 {
     "student": {
         "email": "student@gmail.com",
-        "password": "8de0b3c47f112c59745f717a626932264c422a7563954872e237b223af4ad643", 
+        "password": "043a718774c572bd8a25adbeb1bfcd5c0256ae11cecf9f9c3f925d0e52beaf89",
         "profession": "Student"
     },
     "teacher": {
         "email": "teacher@gmail.com",
         "password": "e3b98a4da31a127d4bde6e43033f66ba274cab0eb7eb1c70ec41402bf6273dd8",
+        "profession": "Instructor"
+    },
+    "teacher2": {
+        "email": "teacher2@gmail.com",
+        "password": "c44474038d459e40e4714afefa7bf8dae9f9834b22f5e8ec1dd434ecb62b512e",
         "profession": "Instructor"
     }
 }

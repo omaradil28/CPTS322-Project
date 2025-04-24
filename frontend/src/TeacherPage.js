@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import BasePage from "./BasePage";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 function TeacherDashboard() {
+  const location = useLocation();
   const [quizzes, setQuizzes] = useState([]);
   const [quizName, setQuizName] = useState("");
   const [quizDescription, setQuizDescription] = useState("");
@@ -10,11 +12,17 @@ function TeacherDashboard() {
     { text: "", possibleAnswers: ["", "", "", ""], correctAnswer: "" },
   ]);
 
+  const username = location.state?.username; 
+
   useEffect(() => {
     axios.get("http://localhost:5001/quizzes")
-      .then(res => setQuizzes(res.data))
+      .then(res => {
+        // Filter quizzes to only show those created by the logged-in teacher
+        const filteredQuizzes = res.data.filter(quiz => quiz.creator === username);
+        setQuizzes(filteredQuizzes);
+      })
       .catch(err => console.error("Error loading quizzes:", err));
-  }, []);
+  }, [username]); // Dependency on username to refetch if username changes
 
   const handleAddQuestion = () =>
     setQuestions([...questions, { text: "", possibleAnswers: ["", "", "", ""], correctAnswer: "" }]);
@@ -37,6 +45,7 @@ function TeacherDashboard() {
       quizID,
       name: quizName.trim(),
       description: quizDescription.trim(),
+      creator: username,
       questions: questions.filter((q) => q.text.trim()),
     };
 
@@ -61,7 +70,7 @@ function TeacherDashboard() {
   return (
     <BasePage>
       <h1>Teacher Dashboard</h1>
-
+      {username && <p>Welcome, {username}!</p>} 
       <form onSubmit={(e) => { e.preventDefault(); handleCreateQuiz(); }}>
         <h2>Create a New Quiz</h2>
 
@@ -123,26 +132,30 @@ function TeacherDashboard() {
 
       <hr />
 
-      <h2>Quizzes</h2>
-      {quizzes.map((quiz, qi) => (
-        <details key={qi} style={{ marginBottom: "1em" }}>
-          <summary>
-            <strong>{quiz.name}</strong> - {quiz.description}
-          </summary>
-          {quiz.questions.map((q, i) => (
-            <div key={i} style={{ marginLeft: "1em" }}>
-              <p><strong>Q{i + 1}:</strong> {q.text}</p>
-              <ul>
-                {q.possibleAnswers.map((a, j) => (
-                  <li key={j}>{a}</li>
-                ))}
-              </ul>
-              <p><em>Correct Answer:</em> {q.correctAnswer}</p>
-            </div>
-          ))}
-          <button onClick={() => handleDeleteQuiz(quiz.quizID)}>Delete Quiz</button>
-        </details>
-      ))}
+      <h2>Your Quizzes</h2>
+      {quizzes.length > 0 ? (
+        quizzes.map((quiz, qi) => (
+          <details key={qi} style={{ marginBottom: "1em" }}>
+            <summary>
+              <strong>{quiz.name}</strong> - {quiz.description}
+            </summary>
+            {quiz.questions.map((q, i) => (
+              <div key={i} style={{ marginLeft: "1em" }}>
+                <p><strong>Q{i + 1}:</strong> {q.text}</p>
+                <ul>
+                  {q.possibleAnswers.map((a, j) => (
+                    <li key={j}>{a}</li>
+                  ))}
+                </ul>
+                <p><em>Correct Answer:</em> {q.correctAnswer}</p>
+              </div>
+            ))}
+            <button onClick={() => handleDeleteQuiz(quiz.quizID)}>Delete Quiz</button>
+          </details>
+        ))
+      ) : (
+        <p>No quizzes found for your account.</p>
+      )}
     </BasePage>
   );
 }

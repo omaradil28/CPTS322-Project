@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // ✅ import useNavigate
+import { useNavigate } from "react-router-dom";
 import BasePage from "./BasePage";
 
 function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState(""); // State to store error or success messages
-  const navigate = useNavigate(); // ✅ useNavigate hook for navigation
+  const [message, setMessage] = useState(""); 
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,18 +21,17 @@ function LoginPage() {
       const data = await response.json();
 
       if (response.ok) {
-        setMessage(data.message); // Display success message
+        setMessage(data.message); 
 
-        // Redirect based on user role (Student or Teacher)
         if (data.profession === "Student") {
-          navigate("/student"); // Redirect to StudentPage if the user is a student
+          navigate("/student", { state: { username } });
         } else if (data.profession === "Instructor") {
-          navigate("/teacher"); // Redirect to TeacherPage if the user is a teacher
+          navigate("/teacher", { state: { username } }); 
         } else {
           setMessage("Unknown profession.");
         }
       } else {
-        setMessage(data.error); // Display error message from backend
+        setMessage(data.error); 
       }
     } catch (error) {
       setMessage("An error occurred while connecting to the server.");
@@ -64,7 +63,7 @@ function LoginPage() {
         </div>
         <button type="submit">Login</button>
       </form>
-      {message && <p>{message}</p>} {/* Display the message */}
+      {message && <p>{message}</p>} {}
     </BasePage>
   );
 }
