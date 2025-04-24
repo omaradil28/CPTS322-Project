@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from "react";
 import BasePage from "./BasePage";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
 function TeacherDashboard() {
+  const location = useLocation();
   const [quizzes, setQuizzes] = useState([]);
   const [quizName, setQuizName] = useState("");
   const [quizDescription, setQuizDescription] = useState("");
   const [questions, setQuestions] = useState([
     { text: "", possibleAnswers: ["", "", "", ""], correctAnswer: "" },
   ]);
+
+  const username = location.state?.username; 
 
   useEffect(() => {
     axios.get("http://localhost:5001/quizzes")
@@ -37,6 +41,7 @@ function TeacherDashboard() {
       quizID,
       name: quizName.trim(),
       description: quizDescription.trim(),
+      creator: username,
       questions: questions.filter((q) => q.text.trim()),
     };
 
@@ -61,7 +66,7 @@ function TeacherDashboard() {
   return (
     <BasePage>
       <h1>Teacher Dashboard</h1>
-
+      {username && <p>Welcome, {username}!</p>} {}
       <form onSubmit={(e) => { e.preventDefault(); handleCreateQuiz(); }}>
         <h2>Create a New Quiz</h2>
 

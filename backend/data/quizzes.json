@@ -1,0 +1,38 @@
+[
+    {
+        "quizID": "quiz-1745485975529",
+        "name": "T1",
+        "description": "Desc",
+        "creator": "teacher",
+        "questions": [
+            {
+                "text": "Quest",
+                "possibleAnswers": [
+                    "1",
+                    "2",
+                    "3",
+                    "4"
+                ],
+                "correctAnswer": "3"
+            }
+        ]
+    },
+    {
+        "quizID": "quiz-1745486004029",
+        "name": "Quiz",
+        "description": "Desc",
+        "creator": "teacher2",
+        "questions": [
+            {
+                "text": "Quest",
+                "possibleAnswers": [
+                    "1",
+                    "2",
+                    "3",
+                    "4"
+                ],
+                "correctAnswer": "4"
+            }
+        ]
+    }
+]
