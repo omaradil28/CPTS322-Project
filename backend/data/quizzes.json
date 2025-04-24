@@ -1,30 +1,12 @@
 [
     {
-        "quizID": "quiz-1745485975529",
-        "name": "T1",
-        "description": "Desc",
+        "quizID": "quiz-1745486380012",
+        "name": "Teacher1",
+        "description": "Test",
         "creator": "teacher",
         "questions": [
             {
-                "text": "Quest",
-                "possibleAnswers": [
-                    "1",
-                    "2",
-                    "3",
-                    "4"
-                ],
-                "correctAnswer": "3"
-            }
-        ]
-    },
-    {
-        "quizID": "quiz-1745486004029",
-        "name": "Quiz",
-        "description": "Desc",
-        "creator": "teacher2",
-        "questions": [
-            {
-                "text": "Quest",
+                "text": "Question",
                 "possibleAnswers": [
                     "1",
                     "2",
@@ -32,6 +14,24 @@
                     "4"
                 ],
                 "correctAnswer": "4"
+            }
+        ]
+    },
+    {
+        "quizID": "quiz-1745486512663",
+        "name": "Teacher2",
+        "description": "Test2",
+        "creator": "teacher2",
+        "questions": [
+            {
+                "text": "Question2",
+                "possibleAnswers": [
+                    "5",
+                    "6",
+                    "7",
+                    "8"
+                ],
+                "correctAnswer": "7"
             }
         ]
     }
