@@ -1,8 +1,9 @@
 [
     {
-        "quizID": "quiz-1745383606868",
-        "name": "Quiz",
+        "quizID": "quiz-1745486380012",
+        "name": "Teacher1",
         "description": "Test",
+        "creator": "teacher",
         "questions": [
             {
                 "text": "Question",
@@ -12,7 +13,25 @@
                     "3",
                     "4"
                 ],
-                "correctAnswer": "1"
+                "correctAnswer": "4"
+            }
+        ]
+    },
+    {
+        "quizID": "quiz-1745486512663",
+        "name": "Teacher2",
+        "description": "Test2",
+        "creator": "teacher2",
+        "questions": [
+            {
+                "text": "Question2",
+                "possibleAnswers": [
+                    "5",
+                    "6",
+                    "7",
+                    "8"
+                ],
+                "correctAnswer": "7"
             }
         ]
     }
