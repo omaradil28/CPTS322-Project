@@ -1,9 +1,10 @@
 [
     {
-        "quizID": "quiz-1745486380012",
-        "name": "Teacher1",
-        "description": "Test",
+        "quizID": "quiz-1745488338899",
+        "name": "Teacher",
+        "description": "Test1",
         "creator": "teacher",
+        "className": "CPTS 322",
         "questions": [
             {
                 "text": "Question",
@@ -18,20 +19,21 @@
         ]
     },
     {
-        "quizID": "quiz-1745486512663",
-        "name": "Teacher2",
+        "quizID": "quiz-1745488401317",
+        "name": "Teacher",
         "description": "Test2",
-        "creator": "teacher2",
+        "creator": "teacher",
+        "className": "CPTS 321",
         "questions": [
             {
-                "text": "Question2",
+                "text": "Question",
                 "possibleAnswers": [
                     "5",
                     "6",
                     "7",
                     "8"
                 ],
-                "correctAnswer": "7"
+                "correctAnswer": "8"
             }
         ]
     }
